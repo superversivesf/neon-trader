@@ -87,161 +87,205 @@ public sealed class MainGameScreen : IRenderable, IDisposable
         _logMessages = new List<string>();
         _marketDataTable = new DataTable();
 
-        // Build the UI hierarchy
-        _window = new FrameView("Neon Trader")
+        try
         {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Fill()
-        };
+            // Build the UI hierarchy
+            _window = new FrameView("Neon Trader")
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill()
+            };
 
-        // --- Status Bar (bottom) ---
-        _statusBar = new Label("")
-        {
-            X = 0,
-            Y = Pos.AnchorEnd(StatusBarHeight),
-            Width = Dim.Fill(),
-            Height = StatusBarHeight,
-            ColorScheme = Colors.Menu,
-            TextAlignment = TextAlignment.Left
-        };
+            // --- Status Bar (bottom) ---
+            _statusBar = new Label("")
+            {
+                X = 0,
+                Y = Pos.AnchorEnd(StatusBarHeight),
+                Width = Dim.Fill(),
+                Height = StatusBarHeight,
+                ColorScheme = Colors.Menu,
+                TextAlignment = TextAlignment.Left
+            };
 
-        // --- Log Window (above status bar) ---
-        _logFrame = new FrameView("Log")
-        {
-            X = 0,
-            Y = Pos.AnchorEnd(StatusBarHeight + LogHeight),
-            Width = Dim.Fill(),
-            Height = LogHeight
-        };
-        _logList = new ListView(_logMessages)
-        {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-            CanFocus = false
-        };
-        _logFrame.Add(_logList);
+            // --- Log Window (above status bar) ---
+            _logFrame = new FrameView("Log")
+            {
+                X = 0,
+                Y = Pos.AnchorEnd(StatusBarHeight + LogHeight),
+                Width = Dim.Fill(),
+                Height = LogHeight
+            };
+            _logList = new ListView(_logMessages)
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                CanFocus = false
+            };
+            _logFrame.Add(_logList);
 
-        // --- Cargo Inventory (left-top) ---
-        _cargoFrame = new FrameView("Cargo Hold")
-        {
-            X = 0,
-            Y = 0,
-            Width = Dim.Percent(35),
-            Height = Dim.Percent(50)
-        };
-        _cargoList = new ListView(_cargoItems)
-        {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-            CanFocus = true
-        };
-        _cargoFrame.Add(_cargoList);
+            // --- Cargo Inventory (left-top) ---
+            _cargoFrame = new FrameView("Cargo Hold")
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Percent(35),
+                Height = Dim.Percent(50)
+            };
+            _cargoList = new ListView(_cargoItems)
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                CanFocus = true
+            };
+            _cargoFrame.Add(_cargoList);
 
-        // --- Navigation Panel (left-bottom) ---
-        _navFrame = new FrameView("Navigation")
-        {
-            X = 0,
-            Y = Pos.Percent(50),
-            Width = Dim.Percent(35),
-            Height = Dim.Fill() - (StatusBarHeight + LogHeight)
-        };
-        _navList = new ListView(_navItems)
-        {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-            CanFocus = true
-        };
-        _navList.SelectedItemChanged += OnNavSelectionChanged;
-        _navFrame.Add(_navList);
+            // --- Navigation Panel (left-bottom) ---
+            _navFrame = new FrameView("Navigation")
+            {
+                X = 0,
+                Y = Pos.Percent(50),
+                Width = Dim.Percent(35),
+                Height = Dim.Fill() - (StatusBarHeight + LogHeight)
+            };
+            _navList = new ListView(_navItems)
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                CanFocus = true
+            };
+            _navList.SelectedItemChanged += OnNavSelectionChanged;
+            _navFrame.Add(_navList);
 
-        // --- Market Table (right-top) ---
-        _marketFrame = new FrameView("Market")
+            // --- Market Table (right-top) ---
+            _marketFrame = new FrameView("Market")
+            {
+                X = Pos.Percent(35),
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Percent(65)
+            };
+            _marketTable = new TableView
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                FullRowSelect = true,
+                MultiSelect = false
+            };
+            BuildMarketTable();
+            _marketTable.Table = _marketDataTable;
+            _marketTable.CellActivated += OnMarketCellActivated;
+            _marketFrame.Add(_marketTable);
+
+            // --- Action Buttons (right-bottom) ---
+            _actionFrame = new FrameView("Actions")
+            {
+                X = Pos.Percent(35),
+                Y = Pos.Percent(65),
+                Width = Dim.Fill(),
+                Height = Dim.Fill() - (StatusBarHeight + LogHeight)
+            };
+
+            _buyButton = new Button("Buy")
+            {
+                X = 1,
+                Y = 1
+            };
+            _buyButton.Clicked += OnBuyClicked;
+
+            _sellButton = new Button("Sell")
+            {
+                X = Pos.Right(_buyButton) + 1,
+                Y = 1
+            };
+            _sellButton.Clicked += OnSellClicked;
+
+            _jumpButton = new Button("Jump")
+            {
+                X = 1,
+                Y = Pos.Bottom(_buyButton) + 1
+            };
+            _jumpButton.Clicked += OnJumpClicked;
+
+            _refuelButton = new Button("Refuel")
+            {
+                X = Pos.Right(_jumpButton) + 1,
+                Y = Pos.Bottom(_buyButton) + 1
+            };
+            _refuelButton.Clicked += OnRefuelClicked;
+
+            _missionButton = new Button("Missions")
+            {
+                X = 1,
+                Y = Pos.Bottom(_jumpButton) + 1
+            };
+            _missionButton.Clicked += OnMissionClicked;
+
+            _actionFrame.Add(_buyButton, _sellButton, _jumpButton, _refuelButton, _missionButton);
+
+            // Assemble the window
+            _window.Add(
+                _cargoFrame,
+                _navFrame,
+                _marketFrame,
+                _actionFrame,
+                _logFrame,
+                _statusBar
+            );
+
+            // Subscribe to game events for automatic UI updates
+            SubscribeToEvents();
+
+            // Initial data load (deferred — PushScreen calls Refresh after systems init)
+            AddLogMessage("Welcome to Neon Trader. Ready for departure.");
+        }
+        catch (Exception ex)
         {
-            X = Pos.Percent(35),
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Percent(65)
-        };
-        _marketTable = new TableView
-        {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-            FullRowSelect = true,
-            MultiSelect = false
-        };
-        BuildMarketTable();
-        _marketTable.Table = _marketDataTable;
-        _marketTable.CellActivated += OnMarketCellActivated;
-        _marketFrame.Add(_marketTable);
-
-        // --- Action Buttons (right-bottom) ---
-        _actionFrame = new FrameView("Actions")
-        {
-            X = Pos.Percent(35),
-            Y = Pos.Percent(65),
-            Width = Dim.Fill(),
-            Height = Dim.Fill() - (StatusBarHeight + LogHeight)
-        };
-
-        _buyButton = new Button("Buy")
-        {
-            X = 1,
-            Y = 1
-        };
-        _buyButton.Clicked += OnBuyClicked;
-
-        _sellButton = new Button("Sell")
-        {
-            X = Pos.Right(_buyButton) + 1,
-            Y = 1
-        };
-        _sellButton.Clicked += OnSellClicked;
-
-        _jumpButton = new Button("Jump")
-        {
-            X = 1,
-            Y = Pos.Bottom(_buyButton) + 1
-        };
-        _jumpButton.Clicked += OnJumpClicked;
-
-        _refuelButton = new Button("Refuel")
-        {
-            X = Pos.Right(_jumpButton) + 1,
-            Y = Pos.Bottom(_buyButton) + 1
-        };
-        _refuelButton.Clicked += OnRefuelClicked;
-
-        _missionButton = new Button("Missions")
-        {
-            X = 1,
-            Y = Pos.Bottom(_jumpButton) + 1
-        };
-        _missionButton.Clicked += OnMissionClicked;
-
-        _actionFrame.Add(_buyButton, _sellButton, _jumpButton, _refuelButton, _missionButton);
-
-        // Assemble the window
-        _window.Add(
-            _cargoFrame,
-            _navFrame,
-            _marketFrame,
-            _actionFrame,
-            _logFrame,
-            _statusBar
-        );
-
-        // Initial data load (deferred — PushScreen calls Refresh after systems init)
-        AddLogMessage("Welcome to Neon Trader. Ready for departure.");
+            // If view construction fails, create a minimal fallback window
+            // so the game can still start and show an error message
+            _window = new FrameView("Neon Trader — Error")
+            {
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = Dim.Fill()
+            };
+            
+            var errorLabel = new Label($"Screen construction failed: {ex.Message}")
+            {
+                X = 1,
+                Y = 1,
+                Width = Dim.Fill() - 2,
+                Height = Dim.Fill() - 2
+            };
+            _window.Add(errorLabel);
+            
+            // Initialize remaining fields to safe defaults
+            _statusBar = new Label("Error loading UI");
+            _cargoFrame = new FrameView("Cargo Hold");
+            _cargoList = new ListView();
+            _navFrame = new FrameView("Navigation");
+            _navList = new ListView();
+            _marketFrame = new FrameView("Market");
+            _marketTable = new TableView();
+            _actionFrame = new FrameView("Actions");
+            _buyButton = new Button("Buy");
+            _sellButton = new Button("Sell");
+            _jumpButton = new Button("Jump");
+            _refuelButton = new Button("Refuel");
+            _missionButton = new Button("Missions");
+            _logFrame = new FrameView("Log");
+            _logList = new ListView();
+        }
     }
 
     /// <summary>

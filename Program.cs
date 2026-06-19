@@ -51,14 +51,44 @@ public sealed class Program
         game.RegisterSystem(missionSystem);
         
         // Register screens with the game for navigation
-        var mainGameScreen = host.Services.GetRequiredService<MainGameScreen>();
-        game.RegisterMainGameScreen(mainGameScreen);
+        // Each screen is resolved individually so a failure in one doesn't block the others
+        MainGameScreen? mainGameScreen = null;
+        StationScreen? stationScreen = null;
+        CharacterScreen? characterScreen = null;
         
-        var stationScreen = host.Services.GetRequiredService<StationScreen>();
-        game.RegisterStationScreen(stationScreen);
+        try
+        {
+            mainGameScreen = host.Services.GetRequiredService<MainGameScreen>();
+            game.RegisterMainGameScreen(mainGameScreen);
+        }
+        catch (Exception ex)
+        {
+            // Log but continue — the game can run without the main screen
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "Failed to construct MainGameScreen");
+        }
         
-        var characterScreen = host.Services.GetRequiredService<CharacterScreen>();
-        game.RegisterCharacterScreen(characterScreen);
+        try
+        {
+            stationScreen = host.Services.GetRequiredService<StationScreen>();
+            game.RegisterStationScreen(stationScreen);
+        }
+        catch (Exception ex)
+        {
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "Failed to construct StationScreen");
+        }
+        
+        try
+        {
+            characterScreen = host.Services.GetRequiredService<CharacterScreen>();
+            game.RegisterCharacterScreen(characterScreen);
+        }
+        catch (Exception ex)
+        {
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "Failed to construct CharacterScreen");
+        }
         
         try
         {

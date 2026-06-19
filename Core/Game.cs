@@ -20,8 +20,7 @@ public sealed class Game : IDisposable
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     
     // Terminal.Gui integration
-    private Toplevel? _toplevel;
-    private readonly Stack<IRenderable> _screenStack = new();
+    private readonly List<IRenderable> _screens = new();
     private IRenderable? _currentScreen;
     
     // Screen references (set after construction via DI)
@@ -116,18 +115,11 @@ public sealed class Game : IDisposable
         if (_currentScreen != null)
         {
             _currentScreen.IsVisible = false;
-            _screenStack.Push(_currentScreen);
         }
         
         _currentScreen = screen;
         _currentScreen.IsVisible = true;
         _currentScreen.Refresh();
-        
-        if (_toplevel != null)
-        {
-            _toplevel.RemoveAll();
-            _toplevel.Add(screen.View);
-        }
         
         _logger.LogInformation("Screen pushed: {ScreenType}", screen.GetType().Name);
     }
@@ -137,29 +129,19 @@ public sealed class Game : IDisposable
     /// </summary>
     public void PopScreen()
     {
-        if (_currentScreen != null && _toplevel != null)
+        if (_currentScreen != null)
         {
-            _toplevel.Remove(_currentScreen.View);
+            _currentScreen.IsVisible = false;
         }
         
-        if (_screenStack.Count > 0)
+        _currentScreen = _mainGameScreen;
+        if (_currentScreen != null)
         {
-            _currentScreen = _screenStack.Pop();
             _currentScreen.IsVisible = true;
             _currentScreen.Refresh();
-            
-            if (_toplevel != null)
-            {
-                _toplevel.Add(_currentScreen.View);
-            }
-            
-            _logger.LogInformation("Screen popped to: {ScreenType}", _currentScreen.GetType().Name);
         }
-        else
-        {
-            _currentScreen = null;
-            _logger.LogInformation("Screen stack empty, no screen active");
-        }
+        
+        _logger.LogInformation("Screen popped to main");
     }
 
     /// <summary>
@@ -192,10 +174,11 @@ public sealed class Game : IDisposable
     /// </summary>
     private void SetupKeybindings()
     {
-        if (_toplevel == null) return;
+        var top = Application.Top;
+        if (top == null) return;
 
         // F1 — Main Game Screen
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.F1)
             {
@@ -205,7 +188,7 @@ public sealed class Game : IDisposable
         };
 
         // F2 — Station Screen
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.F2)
             {
@@ -215,7 +198,7 @@ public sealed class Game : IDisposable
         };
 
         // F3 — Character Screen
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.F3)
             {
@@ -225,34 +208,31 @@ public sealed class Game : IDisposable
         };
 
         // F5 — Quick Save
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.F5)
             {
                 args.Handled = true;
                 _eventBus.Publish(new SaveRequestedEvent { SaveName = "quicksave" });
-                _logger.LogInformation("Quick save requested (F5)");
             }
         };
 
         // F9 — Quick Load
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.F9)
             {
                 args.Handled = true;
                 _eventBus.Publish(new LoadRequestedEvent { SaveName = "quicksave" });
-                _logger.LogInformation("Quick load requested (F9)");
             }
         };
 
         // Esc — Quit
-        _toplevel.KeyPress += (args) =>
+        top.KeyPress += (args) =>
         {
             if (args.KeyEvent.Key == Key.Esc)
             {
                 args.Handled = true;
-                _logger.LogInformation("Quit requested (Esc)");
                 Application.RequestStop();
             }
         };
@@ -265,75 +245,55 @@ public sealed class Game : IDisposable
     /// </summary>
     public void Run()
     {
-        _logger.LogInformation("Starting Neon Trader...");
         _isRunning = true;
 
         try
         {
-            // Create the top-level container for all screens
-            _toplevel = new Toplevel
-            {
-                Width = Dim.Fill(),
-                Height = Dim.Fill()
-            };
-            
-            // Initialize all systems synchronously (must complete before GUI starts)
             InitializeSystemsAsync(_cancellationTokenSource.Token).GetAwaiter().GetResult();
-            
-            // Fire game started event
             _eventBus.Publish(new GameStartedEvent());
+
+            var top = Application.Top;
             
-            _logger.LogInformation("Game initialized. Starting Terminal.Gui main loop...");
-            
-            // Push the main game screen as the initial screen
-            if (_mainGameScreen != null)
-            {
-                PushScreen(_mainGameScreen);
-            }
-            
-            // Set up global keybindings (F1-F3, F5, F9, Esc)
+            // Set up global keybindings (Esc to quit, F-keys for navigation)
             SetupKeybindings();
             
-            // Start the game logic loop as a background task
-            // This runs independently of Terminal.Gui's UI event loop
-            var gameLoopCts = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token);
-            _ = Task.Run(async () =>
+            // Diagnostic: add a simple label to verify rendering works
+            var testLabel = new Label("Neon Trader — press Esc to quit")
             {
-                try
-                {
-                    while (_isRunning && !gameLoopCts.Token.IsCancellationRequested)
-                    {
-                        await UpdateLogicAsync((float)TargetLogicFrameTime, gameLoopCts.Token);
-                        await Task.Delay(100, gameLoopCts.Token);
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    _logger.LogInformation("Game logic loop cancelled");
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Game logic loop error");
-                }
-            }, gameLoopCts.Token);
+                X = 0,
+                Y = 0,
+                Width = Dim.Fill(),
+                Height = 1,
+                ColorScheme = Colors.Menu
+            };
+            top.Add(testLabel);
             
-            // Run Terminal.Gui's main loop (blocks until Application.RequestStop())
-            Application.Run(_toplevel);
-            
-            _logger.LogInformation("Terminal.Gui main loop exited");
-            
-            // Signal game loop to stop
-            gameLoopCts.Cancel();
+            // Add main screen below the label (if it was constructed successfully)
+            if (_mainGameScreen != null)
+            {
+                _mainGameScreen.View.Y = 1;
+                _mainGameScreen.View.Height = Dim.Fill() - 1;
+                top.Add(_mainGameScreen.View);
+            }
+            else
+            {
+                // Fallback: show a message if the main screen failed to load
+                var fallbackLabel = new Label("Main screen failed to load. Press Esc to quit.")
+                {
+                    X = 0,
+                    Y = 1,
+                    Width = Dim.Fill(),
+                    Height = 1,
+                    ColorScheme = Colors.Error
+                };
+                top.Add(fallbackLabel);
+            }
+
+            Application.Run();
         }
         catch (Exception ex)
         {
             _logger.LogCritical(ex, "Game crashed");
-            _eventBus.Publish(new GameErrorEvent
-            {
-                Message = "Game crashed",
-                Exception = ex,
-                SourceSystem = "Game"
-            });
             throw;
         }
         finally
