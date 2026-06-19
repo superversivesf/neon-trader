@@ -109,12 +109,10 @@ public sealed class Program
                 services.AddSingleton<StationScreen>();
                 services.AddSingleton<CharacterScreen>();
                 
-                // Logging
+                // Logging — disabled for TUI (console output corrupts Terminal.Gui rendering)
                 services.AddLogging(builder =>
                 {
-                    builder.AddConsole();
-                    builder.SetMinimumLevel(LogLevel.Information);
+                    builder.SetMinimumLevel(LogLevel.None);
                 });
-            })
-            .UseConsoleLifetime();
+            });
 }
