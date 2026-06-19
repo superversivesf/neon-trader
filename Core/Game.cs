@@ -271,7 +271,11 @@ public sealed class Game : IDisposable
         try
         {
             // Create the top-level container for all screens
-            _toplevel = new Toplevel();
+            _toplevel = new Toplevel
+            {
+                Width = Dim.Fill(),
+                Height = Dim.Fill()
+            };
             
             // Initialize all systems synchronously (must complete before GUI starts)
             InitializeSystemsAsync(_cancellationTokenSource.Token).GetAwaiter().GetResult();
