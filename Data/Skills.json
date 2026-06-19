@@ -1,0 +1,513 @@
+[
+  {
+    "id": "haggling",
+    "name": "Haggling",
+    "description": "Reduces purchase prices and increases sale prices at markets",
+    "category": "Trading",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.02,
+    "xpMultiplier": 1.0,
+    "displayOrder": 1,
+    "perks": [
+      {
+        "id": "haggling_1",
+        "name": "Sharp Eye",
+        "description": "See market price trends for all commodities",
+        "requiredLevel": 2,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "price_trends"
+      },
+      {
+        "id": "haggling_2",
+        "name": "Master Trader",
+        "description": "10% better prices at all markets (buy lower, sell higher)",
+        "requiredLevel": 5,
+        "bonusValue": 0.1,
+        "type": "PercentageBonus",
+        "targetStat": "price_modifier"
+      },
+      {
+        "id": "haggling_3",
+        "name": "Trade Prince",
+        "description": "Access to exclusive high-value trade contracts",
+        "requiredLevel": 8,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "exclusive_contracts"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_haggling"
+  },
+  {
+    "id": "market_analysis",
+    "name": "Market Analysis",
+    "description": "Better market data, predict price changes, identify profitable routes",
+    "category": "Trading",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.015,
+    "xpMultiplier": 1.1,
+    "displayOrder": 2,
+    "perks": [
+      {
+        "id": "market_analysis_1",
+        "name": "Price History",
+        "description": "View 7-day price history for all commodities",
+        "requiredLevel": 3,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "price_history"
+      },
+      {
+        "id": "market_analysis_2",
+        "name": "Route Optimizer",
+        "description": "Auto-calculate most profitable trade routes between systems",
+        "requiredLevel": 6,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "route_optimizer"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_market_analysis"
+  },
+  {
+    "id": "cargo_management",
+    "name": "Cargo Management",
+    "description": "Increased cargo capacity, better organization, reduced mass penalty",
+    "category": "Trading",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.03,
+    "xpMultiplier": 0.9,
+    "displayOrder": 3,
+    "perks": [
+      {
+        "id": "cargo_management_1",
+        "name": "Efficient Packing",
+        "description": "+10% cargo capacity on all ships",
+        "requiredLevel": 4,
+        "bonusValue": 0.1,
+        "type": "PercentageBonus",
+        "targetStat": "cargo_capacity"
+      },
+      {
+        "id": "cargo_management_2",
+        "name": "Mass Optimization",
+        "description": "Cargo mass reduced by 20%, improving jump range and fuel efficiency",
+        "requiredLevel": 7,
+        "bonusValue": 0.2,
+        "type": "PercentageBonus",
+        "targetStat": "cargo_mass_reduction"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_cargo_management"
+  },
+  {
+    "id": "gunnery",
+    "name": "Gunnery",
+    "description": "Increased weapon damage, accuracy, and projectile speed",
+    "category": "Combat",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.05,
+    "xpMultiplier": 1.0,
+    "displayOrder": 10,
+    "perks": [
+      {
+        "id": "gunnery_1",
+        "name": "Precision Targeting",
+        "description": "+15% weapon accuracy and projectile speed",
+        "requiredLevel": 3,
+        "bonusValue": 0.15,
+        "type": "PercentageBonus",
+        "targetStat": "weapon_accuracy"
+      },
+      {
+        "id": "gunnery_2",
+        "name": "Overcharge",
+        "description": "Weapons deal 25% more damage but overheat 50% faster",
+        "requiredLevel": 6,
+        "bonusValue": 0.25,
+        "type": "PercentageBonus",
+        "targetStat": "weapon_damage"
+      },
+      {
+        "id": "gunnery_3",
+        "name": "Devastating Salvo",
+        "description": "Every 5th shot deals double damage",
+        "requiredLevel": 9,
+        "bonusValue": 1.0,
+        "type": "SpecialAbility",
+        "targetStat": "devastating_salvo"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_gunnery"
+  },
+  {
+    "id": "shields",
+    "name": "Shield Systems",
+    "description": "Stronger shields, faster recharge, better resistance",
+    "category": "Combat",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.04,
+    "xpMultiplier": 0.9,
+    "displayOrder": 11,
+    "perks": [
+      {
+        "id": "shields_1",
+        "name": "Fast Recharge",
+        "description": "Shield recharge rate increased by 50%",
+        "requiredLevel": 3,
+        "bonusValue": 0.5,
+        "type": "PercentageBonus",
+        "targetStat": "shield_recharge"
+      },
+      {
+        "id": "shields_2",
+        "name": "Harmonics",
+        "description": "Shields resist energy damage 30% better",
+        "requiredLevel": 5,
+        "bonusValue": 0.3,
+        "type": "PercentageBonus",
+        "targetStat": "energy_resistance"
+      },
+      {
+        "id": "shields_3",
+        "name": "Reflective Plating",
+        "description": "10% chance to reflect projectile damage back to attacker",
+        "requiredLevel": 8,
+        "bonusValue": 0.1,
+        "type": "PercentageBonus",
+        "targetStat": "reflect_chance"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_shields"
+  },
+  {
+    "id": "missiles",
+    "name": "Missile Systems",
+    "description": "Better missile tracking, damage, capacity, and countermeasures",
+    "category": "Combat",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.05,
+    "xpMultiplier": 1.1,
+    "displayOrder": 12,
+    "perks": [
+      {
+        "id": "missiles_1",
+        "name": "Target Lock",
+        "description": "Missile lock-on time reduced by 30%",
+        "requiredLevel": 2,
+        "bonusValue": 0.3,
+        "type": "PercentageBonus",
+        "targetStat": "lock_time"
+      },
+      {
+        "id": "missiles_2",
+        "name": "Warhead Specialist",
+        "description": "Missiles deal +30% damage",
+        "requiredLevel": 5,
+        "bonusValue": 0.3,
+        "type": "PercentageBonus",
+        "targetStat": "missile_damage"
+      },
+      {
+        "id": "missiles_3",
+        "name": "Swarm Launch",
+        "description": "Fire 2 missiles per launch (consumes 2 ammo)",
+        "requiredLevel": 8,
+        "bonusValue": 1.0,
+        "type": "SpecialAbility",
+        "targetStat": "swarm_launch"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_missiles"
+  },
+  {
+    "id": "navigation",
+    "name": "Navigation",
+    "description": "Increased jump range, reduced fuel consumption, better route planning",
+    "category": "Piloting",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.03,
+    "xpMultiplier": 1.0,
+    "displayOrder": 20,
+    "perks": [
+      {
+        "id": "navigation_1",
+        "name": "Fuel Efficiency",
+        "description": "Jump fuel cost reduced by 15%",
+        "requiredLevel": 3,
+        "bonusValue": 0.15,
+        "type": "PercentageBonus",
+        "targetStat": "fuel_efficiency"
+      },
+      {
+        "id": "navigation_2",
+        "name": "Warp Drive Tuning",
+        "description": "Jump range increased by 20%",
+        "requiredLevel": 6,
+        "bonusValue": 0.2,
+        "type": "PercentageBonus",
+        "targetStat": "jump_range"
+      },
+      {
+        "id": "navigation_3",
+        "name": "Quantum Slipstream",
+        "description": "10% chance to jump for free (no fuel consumed)",
+        "requiredLevel": 9,
+        "bonusValue": 0.1,
+        "type": "PercentageBonus",
+        "targetStat": "free_jump_chance"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_navigation"
+  },
+  {
+    "id": "evasion",
+    "name": "Evasive Maneuvers",
+    "description": "Better turning, speed boost, damage avoidance",
+    "category": "Piloting",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.025,
+    "xpMultiplier": 1.0,
+    "displayOrder": 21,
+    "perks": [
+      {
+        "id": "evasion_1",
+        "name": "Afterburner Mastery",
+        "description": "Afterburner duration +50%, cooldown -20%",
+        "requiredLevel": 3,
+        "bonusValue": 0.5,
+        "type": "PercentageBonus",
+        "targetStat": "afterburner_duration"
+      },
+      {
+        "id": "evasion_2",
+        "name": "Jinking",
+        "description": "15% chance to evade incoming fire completely",
+        "requiredLevel": 5,
+        "bonusValue": 0.15,
+        "type": "PercentageBonus",
+        "targetStat": "evasion_chance"
+      },
+      {
+        "id": "evasion_3",
+        "name": "Phase Shift",
+        "description": "Brief invulnerability (3 seconds) when hull drops below 25% (once per combat)",
+        "requiredLevel": 8,
+        "bonusValue": 1.0,
+        "type": "SpecialAbility",
+        "targetStat": "phase_shift"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_evasion"
+  },
+  {
+    "id": "repair",
+    "name": "Ship Repair",
+    "description": "Faster repairs, cheaper maintenance, emergency repairs in combat",
+    "category": "Engineering",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.05,
+    "xpMultiplier": 0.8,
+    "displayOrder": 30,
+    "perks": [
+      {
+        "id": "repair_1",
+        "name": "Field Repairs",
+        "description": "Repair hull during combat (slow, 1% hull per second)",
+        "requiredLevel": 4,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "combat_repair"
+      },
+      {
+        "id": "repair_2",
+        "name": "Jury Rigging",
+        "description": "Temporary repair boosts damaged system performance by 20% for 30 seconds",
+        "requiredLevel": 7,
+        "bonusValue": 0.2,
+        "type": "PercentageBonus",
+        "targetStat": "jury_rig_bonus"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_repair"
+  },
+  {
+    "id": "systems_engineering",
+    "name": "Systems Engineering",
+    "description": "Upgrade efficiency, reduced power draw, overclock systems",
+    "category": "Engineering",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.03,
+    "xpMultiplier": 1.0,
+    "displayOrder": 31,
+    "perks": [
+      {
+        "id": "systems_engineering_1",
+        "name": "Power Management",
+        "description": "All ship systems consume 10% less power",
+        "requiredLevel": 3,
+        "bonusValue": 0.1,
+        "type": "PercentageBonus",
+        "targetStat": "power_efficiency"
+      },
+      {
+        "id": "systems_engineering_2",
+        "name": "Overclocking",
+        "description": "Overclock one system for 50% performance (10% chance of temporary failure)",
+        "requiredLevel": 6,
+        "bonusValue": 0.5,
+        "type": "SpecialAbility",
+        "targetStat": "overclock"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_systems_engineering"
+  },
+  {
+    "id": "survey",
+    "name": "Surveying",
+    "description": "Better scanner range, more detailed scans, discover hidden resources",
+    "category": "Exploration",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.04,
+    "xpMultiplier": 1.0,
+    "displayOrder": 40,
+    "perks": [
+      {
+        "id": "survey_1",
+        "name": "Deep Scan",
+        "description": "Scanner range doubled, reveals hidden asteroid fields",
+        "requiredLevel": 3,
+        "bonusValue": 1.0,
+        "type": "PercentageBonus",
+        "targetStat": "scan_range"
+      },
+      {
+        "id": "survey_2",
+        "name": "Resource Detection",
+        "description": "See mineral content and richness of asteroids/planets before mining",
+        "requiredLevel": 5,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "resource_detection"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_survey"
+  },
+  {
+    "id": "archaeology",
+    "name": "Xenoarchaeology",
+    "description": "Find and analyze ancient artifacts, tech fragments, and ruins",
+    "category": "Exploration",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.03,
+    "xpMultiplier": 1.2,
+    "displayOrder": 41,
+    "perks": [
+      {
+        "id": "archaeology_1",
+        "name": "Artifact Hunter",
+        "description": "Ancient artifacts found 3x more often during exploration",
+        "requiredLevel": 4,
+        "bonusValue": 3.0,
+        "type": "FlatBonus",
+        "targetStat": "artifact_find_rate"
+      },
+      {
+        "id": "archaeology_2",
+        "name": "Tech Decoder",
+        "description": "Decode alien tech fragments into usable blueprints",
+        "requiredLevel": 7,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "tech_decoding"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_archaeology"
+  },
+  {
+    "id": "command",
+    "name": "Command",
+    "description": "Crew efficiency, mission rewards, faction influence",
+    "category": "Leadership",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.03,
+    "xpMultiplier": 1.0,
+    "displayOrder": 50,
+    "perks": [
+      {
+        "id": "command_1",
+        "name": "Inspiring Presence",
+        "description": "Crew work 15% faster (repairs, loading, system cooldowns)",
+        "requiredLevel": 3,
+        "bonusValue": 0.15,
+        "type": "PercentageBonus",
+        "targetStat": "crew_efficiency"
+      },
+      {
+        "id": "command_2",
+        "name": "Diplomat",
+        "description": "Faction reputation gains increased by 25%",
+        "requiredLevel": 5,
+        "bonusValue": 0.25,
+        "type": "PercentageBonus",
+        "targetStat": "rep_gain_bonus"
+      },
+      {
+        "id": "command_3",
+        "name": "Fleet Commander",
+        "description": "Can hire and command escort ships (up to 2)",
+        "requiredLevel": 8,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "escort_ships"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_command"
+  },
+  {
+    "id": "persuasion",
+    "name": "Persuasion",
+    "description": "Better mission rewards, lower bribe costs, unique dialogue options",
+    "category": "Leadership",
+    "maxLevel": 10,
+    "baseBonusPerLevel": 0.025,
+    "xpMultiplier": 1.1,
+    "displayOrder": 51,
+    "perks": [
+      {
+        "id": "persuasion_1",
+        "name": "Silver Tongue",
+        "description": "Mission rewards increased by 20%",
+        "requiredLevel": 3,
+        "bonusValue": 0.2,
+        "type": "PercentageBonus",
+        "targetStat": "mission_reward_bonus"
+      },
+      {
+        "id": "persuasion_2",
+        "name": "Connections",
+        "description": "Access to restricted faction missions and unique dialogue options",
+        "requiredLevel": 6,
+        "bonusValue": 1.0,
+        "type": "UnlockFeature",
+        "targetStat": "restricted_missions"
+      }
+    ],
+    "prerequisiteSkills": [],
+    "iconResource": "skill_persuasion"
+  }
+]

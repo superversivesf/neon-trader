@@ -1,0 +1,410 @@
+[
+  {
+    "id": "neon_station",
+    "name": "Neon Station",
+    "type": "Station",
+    "systemName": "Neon System",
+    "orbitIndex": 0,
+    "factionId": "neon_corp",
+    "playerAlignment": "Neutral",
+    "economyType": "HighTech",
+    "techLevel": 8,
+    "population": 500000,
+    "hasShipyard": true,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "The glittering capital of the Neon System, a massive orbital ring station pulsing with neon lights. Headquarters of Neon Corporation and the premier trading hub in the sector.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": true,
+    "connectedLocations": ["cyberia_prime", "void_docks", "ferro_mining", "agri_world_7"],
+    "distances": {
+      "cyberia_prime": 2.5,
+      "void_docks": 1.2,
+      "ferro_mining": 3.8,
+      "agri_world_7": 4.1
+    },
+    "fuelCosts": {
+      "cyberia_prime": 15,
+      "void_docks": 8,
+      "ferro_mining": 22,
+      "agri_world_7": 25
+    }
+  },
+  {
+    "id": "cyberia_prime",
+    "name": "Cyberia Prime",
+    "type": "Terrestrial",
+    "systemName": "Neon System",
+    "orbitIndex": 2,
+    "factionId": "tech_syndicate",
+    "playerAlignment": "Neutral",
+    "economyType": "HighTech",
+    "techLevel": 9,
+    "population": 12000000,
+    "hasShipyard": true,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "A cyberpunk megacity planet covered in glowing circuitry. The Tech Syndicate manufactures the most advanced AI cores and quantum computers in the known galaxy.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["neon_station", "void_docks", "data_haven"],
+    "distances": {
+      "neon_station": 2.5,
+      "void_docks": 3.1,
+      "data_haven": 1.8
+    },
+    "fuelCosts": {
+      "neon_station": 15,
+      "void_docks": 18,
+      "data_haven": 12
+    }
+  },
+  {
+    "id": "void_docks",
+    "name": "Void Docks",
+    "type": "Station",
+    "systemName": "Neon System",
+    "orbitIndex": 1,
+    "factionId": "void_runners",
+    "playerAlignment": "Neutral",
+    "economyType": "Industrial",
+    "techLevel": 6,
+    "population": 80000,
+    "hasShipyard": true,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "A rough-and-tumble station on the system's fringe. The Void Runners operate here - smugglers, mercenaries, and those who prefer to stay off corporate radar.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["neon_station", "cyberia_prime", "ferro_mining", "pirate_haven"],
+    "distances": {
+      "neon_station": 1.2,
+      "cyberia_prime": 3.1,
+      "ferro_mining": 2.6,
+      "pirate_haven": 5.0
+    },
+    "fuelCosts": {
+      "neon_station": 8,
+      "cyberia_prime": 18,
+      "ferro_mining": 15,
+      "pirate_haven": 30
+    }
+  },
+  {
+    "id": "ferro_mining",
+    "name": "Ferro Mining Colony",
+    "type": "Mining",
+    "systemName": "Neon System",
+    "orbitIndex": 4,
+    "factionId": "ferro_corp",
+    "playerAlignment": "Neutral",
+    "economyType": "Industrial",
+    "techLevel": 5,
+    "population": 250000,
+    "hasShipyard": false,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "A massive strip-mining operation on a mineral-rich world. Ferro Corp extracts iron, copper, and rare earth elements. The air is thick with metallic dust.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["neon_station", "void_docks", "agri_world_7"],
+    "distances": {
+      "neon_station": 3.8,
+      "void_docks": 2.6,
+      "agri_world_7": 2.2
+    },
+    "fuelCosts": {
+      "neon_station": 22,
+      "void_docks": 15,
+      "agri_world_7": 14
+    }
+  },
+  {
+    "id": "agri_world_7",
+    "name": "Agri-World 7",
+    "type": "Terrestrial",
+    "systemName": "Neon System",
+    "orbitIndex": 3,
+    "factionId": "harvest_collective",
+    "playerAlignment": "Neutral",
+    "economyType": "Agricultural",
+    "techLevel": 4,
+    "population": 8000000,
+    "hasShipyard": false,
+    "hasOutfitter": false,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "A lush paradise world dedicated to food production. The Harvest Collective feeds billions across the sector with grain, protein algae, and luxury foodstuffs.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["neon_station", "ferro_mining", "oasis_station"],
+    "distances": {
+      "neon_station": 4.1,
+      "ferro_mining": 2.2,
+      "oasis_station": 6.5
+    },
+    "fuelCosts": {
+      "neon_station": 25,
+      "ferro_mining": 14,
+      "oasis_station": 38
+    }
+  },
+  {
+    "id": "data_haven",
+    "name": "Data Haven",
+    "type": "Station",
+    "systemName": "Cyberia System",
+    "orbitIndex": 0,
+    "factionId": "data_brokers",
+    "playerAlignment": "Neutral",
+    "economyType": "HighTech",
+    "techLevel": 10,
+    "population": 50000,
+    "hasShipyard": false,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "A neutral station dedicated to information trade. The Data Brokers buy and sell software licenses, stolen tech, and corporate secrets. Encryption is absolute here.",
+    "imageResource": "",
+    "isDiscovered": false,
+    "isHomeBase": false,
+    "connectedLocations": ["cyberia_prime", "quantum_research"],
+    "distances": {
+      "cyberia_prime": 1.8,
+      "quantum_research": 2.1
+    },
+    "fuelCosts": {
+      "cyberia_prime": 12,
+      "quantum_research": 14
+    }
+  },
+  {
+    "id": "quantum_research",
+    "name": "Quantum Research Station",
+    "type": "Station",
+    "systemName": "Cyberia System",
+    "orbitIndex": 2,
+    "factionId": "quantum_institute",
+    "playerAlignment": "Neutral",
+    "economyType": "Research",
+    "techLevel": 10,
+    "population": 15000,
+    "hasShipyard": false,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "Cutting-edge quantum computing research facility. Produces quantum computers and experimental tech. Heavily guarded by corporate security.",
+    "imageResource": "",
+    "isDiscovered": false,
+    "isHomeBase": false,
+    "connectedLocations": ["data_haven", "cyberia_prime"],
+    "distances": {
+      "data_haven": 2.1,
+      "cyberia_prime": 3.5
+    },
+    "fuelCosts": {
+      "data_haven": 14,
+      "cyberia_prime": 20
+    }
+  },
+  {
+    "id": "pirate_haven",
+    "name": "Pirate Haven",
+    "type": "AsteroidBase",
+    "systemName": "Outer Rim",
+    "orbitIndex": 0,
+    "factionId": "crimson_fleet",
+    "playerAlignment": "Hostile",
+    "economyType": "Criminal",
+    "techLevel": 5,
+    "population": 120000,
+    "hasShipyard": true,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "A hollowed-out asteroid serving as base for the Crimson Fleet pirates. Anything goes here - slaves, narcotics, stolen tech, untraceable weapons. Enter at your own risk.",
+    "imageResource": "",
+    "isDiscovered": false,
+    "isHomeBase": false,
+    "connectedLocations": ["void_docks", "smuggler_run"],
+    "distances": {
+      "void_docks": 5.0,
+      "smuggler_run": 2.3
+    },
+    "fuelCosts": {
+      "void_docks": 30,
+      "smuggler_run": 15
+    }
+  },
+  {
+    "id": "smuggler_run",
+    "name": "Smuggler's Run",
+    "type": "AsteroidBase",
+    "systemName": "Outer Rim",
+    "orbitIndex": 1,
+    "factionId": "shadow_syndicate",
+    "playerAlignment": "Hostile",
+    "economyType": "Criminal",
+    "techLevel": 6,
+    "population": 50000,
+    "hasShipyard": false,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "A hidden waystation for the Shadow Syndicate. Specializes in moving contraband across faction borders. Discretion is the only currency that matters.",
+    "imageResource": "",
+    "isDiscovered": false,
+    "isHomeBase": false,
+    "connectedLocations": ["pirate_haven", "freeport"],
+    "distances": {
+      "pirate_haven": 2.3,
+      "freeport": 4.2
+    },
+    "fuelCosts": {
+      "pirate_haven": 15,
+      "freeport": 25
+    }
+  },
+  {
+    "id": "freeport",
+    "name": "Freeport",
+    "type": "Station",
+    "systemName": "Border Systems",
+    "orbitIndex": 0,
+    "factionId": "free_traders",
+    "playerAlignment": "Neutral",
+    "economyType": "Balanced",
+    "techLevel": 6,
+    "population": 300000,
+    "hasShipyard": true,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": true,
+    "hasCommodityExchange": true,
+    "description": "An independent trade station on the border of corporate space. The Free Traders Guild welcomes all - merchants, smugglers, and adventurers alike. No questions asked.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["smuggler_run", "oasis_station", "frontier_outpost"],
+    "distances": {
+      "smuggler_run": 4.2,
+      "oasis_station": 3.8,
+      "frontier_outpost": 5.5
+    },
+    "fuelCosts": {
+      "smuggler_run": 25,
+      "oasis_station": 22,
+      "frontier_outpost": 32
+    }
+  },
+  {
+    "id": "oasis_station",
+    "name": "Oasis Station",
+    "type": "Station",
+    "systemName": "Border Systems",
+    "orbitIndex": 1,
+    "factionId": "water_guild",
+    "playerAlignment": "Neutral",
+    "economyType": "Service",
+    "techLevel": 5,
+    "population": 100000,
+    "hasShipyard": false,
+    "hasOutfitter": true,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "A luxury resort station built around a massive water reservoir. The Water Guild caters to wealthy travelers. Famous for medicinal herbs and synthetic organs.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["freeport", "agri_world_7", "frontier_outpost"],
+    "distances": {
+      "freeport": 3.8,
+      "agri_world_7": 6.5,
+      "frontier_outpost": 4.0
+    },
+    "fuelCosts": {
+      "freeport": 22,
+      "agri_world_7": 38,
+      "frontier_outpost": 24
+    }
+  },
+  {
+    "id": "frontier_outpost",
+    "name": "Frontier Outpost",
+    "type": "Station",
+    "systemName": "Frontier",
+    "orbitIndex": 0,
+    "factionId": "frontier_corp",
+    "playerAlignment": "Neutral",
+    "economyType": "Industrial",
+    "techLevel": 4,
+    "population": 50000,
+    "hasShipyard": false,
+    "hasOutfitter": false,
+    "hasMissionBoard": true,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": true,
+    "description": "The last corporate outpost before uncharted space. Frontier Corp runs survey missions and sells basic supplies to explorers pushing the boundary.",
+    "imageResource": "",
+    "isDiscovered": true,
+    "isHomeBase": false,
+    "connectedLocations": ["freeport", "oasis_station", "derelict_station"],
+    "distances": {
+      "freeport": 5.5,
+      "oasis_station": 4.0,
+      "derelict_station": 3.2
+    },
+    "fuelCosts": {
+      "freeport": 32,
+      "oasis_station": 24,
+      "derelict_station": 20
+    }
+  },
+  {
+    "id": "derelict_station",
+    "name": "Derelict Station",
+    "type": "Derelict",
+    "systemName": "Frontier",
+    "orbitIndex": 2,
+    "factionId": "none",
+    "playerAlignment": "Neutral",
+    "economyType": "Salvage",
+    "techLevel": 2,
+    "population": 500,
+    "hasShipyard": false,
+    "hasOutfitter": false,
+    "hasMissionBoard": false,
+    "hasBlackMarket": false,
+    "hasCommodityExchange": false,
+    "description": "An abandoned research station from the First Expansion. Salvage crews pick through the ruins for lost tech. Dangerous - systems fail randomly, and something still lurks in the dark corridors.",
+    "imageResource": "",
+    "isDiscovered": false,
+    "isHomeBase": false,
+    "connectedLocations": ["frontier_outpost"],
+    "distances": {
+      "frontier_outpost": 3.2
+    },
+    "fuelCosts": {
+      "frontier_outpost": 20
+    }
+  }
+]
