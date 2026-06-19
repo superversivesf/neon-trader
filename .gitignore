@@ -44,3 +44,6 @@ TestResults/
 *.trx
 *.coverage
 coverage/
+
+## Logs
+*.log

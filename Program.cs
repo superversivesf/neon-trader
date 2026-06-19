@@ -22,10 +22,10 @@ public sealed class Program
     /// </summary>
     public static async Task<int> Main(string[] args)
     {
-        // Initialize Terminal.Gui console driver BEFORE any view construction
-        Application.Init();
-        
-        // Build the host with DI container
+        // Build the host with DI container FIRST (before Terminal.Gui Init)
+        // Application.Init() installs Terminal.Gui's SynchronizationContext,
+        // which would deadlock any async operations (like DataLoader's File.ReadAllTextAsync)
+        // if called before Application.Run() starts the main loop.
         var host = CreateHostBuilder(args).Build();
 
         // Get the game instance
@@ -63,7 +63,6 @@ public sealed class Program
         }
         catch (Exception ex)
         {
-            // Log but continue — the game can run without the main screen
             var logger = host.Services.GetRequiredService<ILogger<Program>>();
             logger.LogError(ex, "Failed to construct MainGameScreen");
         }
@@ -90,9 +89,12 @@ public sealed class Program
             logger.LogError(ex, "Failed to construct CharacterScreen");
         }
         
+        // Initialize Terminal.Gui RIGHT BEFORE Application.Run()
+        // Must come after all async DI/system init to avoid deadlock
+        Application.Init();
+        
         try
         {
-            // Run the game with Terminal.Gui integration (blocks until quit)
             game.Run();
             return 0;
         }
@@ -139,10 +141,11 @@ public sealed class Program
                 services.AddSingleton<StationScreen>();
                 services.AddSingleton<CharacterScreen>();
                 
-                // Logging — disabled for TUI (console output corrupts Terminal.Gui rendering)
+                // Logging — file-based to avoid corrupting Terminal.Gui rendering
                 services.AddLogging(builder =>
                 {
-                    builder.SetMinimumLevel(LogLevel.None);
+                    builder.ClearProviders();
+                    builder.AddProvider(new FileLoggerProvider("neon-trader.log", LogLevel.Information));
                 });
             });
 }

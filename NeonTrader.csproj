@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Compile Remove="Tests\**\*.cs" />
+    <Compile Remove="MinimalTest.cs" />
     <None Remove="Tests\**\*" />
   </ItemGroup>
 
