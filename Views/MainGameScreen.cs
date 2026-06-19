@@ -30,7 +30,7 @@ public sealed class MainGameScreen : IRenderable, IDisposable
     private IDisposable? _tradeSubscription;
 
     // Terminal.Gui views
-    private readonly Window _window;
+    private readonly View _window;
     private readonly FrameView _cargoFrame;
     private readonly ListView _cargoList;
     private readonly List<string> _cargoItems;
@@ -88,7 +88,7 @@ public sealed class MainGameScreen : IRenderable, IDisposable
         _marketDataTable = new DataTable();
 
         // Build the UI hierarchy
-        _window = new Window("Neon Trader")
+        _window = new FrameView("Neon Trader")
         {
             X = 0,
             Y = 0,

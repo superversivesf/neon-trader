@@ -19,7 +19,7 @@ public sealed class CharacterScreen : IRenderable
     private readonly SaveSystem? _saveSystem;
 
     // Root window
-    private Window _window = null!;
+    private View _window = null!;
 
     // Tab view
     private TabView _tabView = null!;
@@ -136,7 +136,7 @@ public sealed class CharacterScreen : IRenderable
     /// </summary>
     private void BuildUI()
     {
-        _window = new Window("CHARACTER & SHIP MANAGEMENT")
+        _window = new FrameView("CHARACTER & SHIP MANAGEMENT")
         {
             X = 0,
             Y = 0,

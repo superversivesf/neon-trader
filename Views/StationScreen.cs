@@ -20,7 +20,7 @@ public sealed class StationScreen : IRenderable
     private readonly Reputation? _reputation;
 
     // ─── Root Views ───────────────────────────────────────────────────────
-    private readonly Window _window;
+    private readonly View _window;
     private readonly TabView _tabView;
     private readonly Label _statusLabel;
     private readonly Label _creditsLabel;
@@ -89,7 +89,7 @@ public sealed class StationScreen : IRenderable
         _reputation = reputation;
 
         // ── Root Window ───────────────────────────────────────────────────
-        _window = new Window("Neon Trader — Station Services")
+        _window = new FrameView("Neon Trader — Station Services")
         {
             X = 0,
             Y = 0,
